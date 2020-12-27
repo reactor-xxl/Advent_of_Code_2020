@@ -21,13 +21,24 @@
     <ClCompile Include="src\day_01.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\day_02.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\day_01.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\String.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\solutions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input\day_01.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_02.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

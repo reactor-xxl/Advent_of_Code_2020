@@ -21,13 +21,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
-#include <iostream>
-#include "day_01.hpp"
+#include "solutions.hpp"
+
+const String day01_input_file{ "input\\day_01.txt" };
+const String day02_input_file{ "input\\day_02.txt" };
+
 
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
-
+    day_01_problem_01( day01_input_file, 2020 );
+    day_01_problem_02( day01_input_file, 2020 );
+    day_02_problem_01( day02_input_file );
+    day_02_problem_02( day02_input_file );
 
     return 0;
 }
