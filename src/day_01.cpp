@@ -108,9 +108,17 @@ int		ExpenseReport::at( size_t index ) const
 
 void	day_01_problem_01( const String& inputFilename, int sumValue )
 {
- 	std::cout << "---- Day 1, Problem 1:\n";
+ 	std::cout << "Day 1, Problem 1:\n";
 
 	std::ifstream   infile{ inputFilename.c_str() };
+
+	if ( !infile.is_open() )
+	{
+		std::cout << "Unable to open input file \"" << inputFilename
+			<< "\".  Day 1, Problem 1 solution cannot be provided."
+			<< std::endl;
+		return;
+	}
 
     ExpenseReport er;
 
@@ -130,9 +138,17 @@ void	day_01_problem_01( const String& inputFilename, int sumValue )
 
 void	day_01_problem_02( const String& inputFilename, int sumValue )
 {
- 	std::cout << "---- Day 1, Problem 2:\n";
+ 	std::cout << "Day 1, Problem 2:\n";
 
 	std::ifstream   infile{ inputFilename.c_str() };
+
+	if ( !infile.is_open() )
+	{
+		std::cout << "Unable to open input file \"" << inputFilename
+			<< "\".  Day 1, Problem 2 solution cannot be provided."
+			<< std::endl;
+		return;
+	}
 
     ExpenseReport er;
 

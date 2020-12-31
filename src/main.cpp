@@ -22,17 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 #include "solutions.hpp"
+#include <iostream>
+#include <iomanip>
 
-const String day01_input_file{ "input\\day_01.txt" };
-const String day02_input_file{ "input\\day_02.txt" };
+void announceDay( int day );
 
 
 int main()
 {
-    day_01_problem_01( day01_input_file, 2020 );
-    day_01_problem_02( day01_input_file, 2020 );
-    day_02_problem_01( day02_input_file );
-    day_02_problem_02( day02_input_file );
+    day_04_problem_01("input\\day_04.txt");
+/*
+    day_01_problem_01( "input\\day_01.txt", 2020 );
+    day_01_problem_02( "input\\day_01.txt", 2020 );
+
+    std::cout << '\n';
+
+    day_02_problem_01( "input\\day_02.txt" );
+    day_02_problem_02( "input\\day_02.txt" );
+
+    std::cout << '\n';
+
+    day_03_problem_01( "input\\day_03.txt" );
+    day_03_problem_02( "input\\day_03.txt" );
+*/
 
     return 0;
 }
@@ -40,6 +52,11 @@ int main()
 
 
 
+
+void announceDay( int day )
+{
+    std::cout << "------- DAY " << std::setw(2) << std::setfill('0') << day << " -------" << std::endl;
+}
 
 
 

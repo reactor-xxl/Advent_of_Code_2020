@@ -24,6 +24,12 @@
     <ClCompile Include="src\day_02.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\day_03.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\day_04.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\String.hpp">
@@ -38,6 +44,18 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="input\day_02.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_03.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_04.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_05.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_06.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

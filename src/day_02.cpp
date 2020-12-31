@@ -19,14 +19,14 @@ bool isValid_OTCAS( const String& password, const PasswordPolicy& policy );
 
 void	day_02_problem_01( const String& inputFilename )
 {
-	std::cout << "---- Day 2, Problem 1:\n";
+ 	std::cout << "Day 2, Problem 1:\n";
 
 	std::fstream   infile{ inputFilename.c_str() };
 
 	if ( !infile.is_open() )
 	{
 		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  day_02_problem_01 solution cannot be provided."
+			<< "\".  Day 2, Problem 1 solution cannot be provided."
 			<< std::endl;
 		return;
 	}
@@ -56,14 +56,14 @@ std::cout << "Password file \"" << inputFilename
 
 void	day_02_problem_02( const String& inputFilename )
 {
-	std::cout << "---- Day 2, Problem 2:\n";
+ 	std::cout << "Day 2, Problem 2:\n";
 
 	std::fstream   infile{ inputFilename.c_str() };
 
 	if ( !infile.is_open() )
 	{
 		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  day_02_problem_02 solution cannot be provided."
+			<< "\".  Day 2, Problem 2 solution cannot be provided."
 			<< std::endl;
 		return;
 	}
