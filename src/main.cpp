@@ -69,17 +69,13 @@ int main()
 		"vibrant beige bags contain 1 wavy silver bag, 4 shiny indigo bags, 2 wavy aqua bags, 1 mirrored cyan bag."
 	};
 */
-    std::string test1{ "shiny lavender bags contain 2 shiny salmon bags, 2 bright salmon bags, 4 posh fuchsia bags." };
-
-    test_build_bag_rule( test1 );
-
-    std::string test2{"bright chartreuse bags contain no other bags."};
-
-    test_build_bag_rule( test2 );
+    void test_run_program();
+    test_run_program();
 
  //   testBagRead();
  //   read_single_bag_rule();
 //    testBagRead();
+
 
     return 0;
 }
