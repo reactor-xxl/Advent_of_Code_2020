@@ -30,12 +30,24 @@
     <ClCompile Include="src\day_04.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\day_05.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\day_06.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\day_07.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\String.hpp">
+    <ClInclude Include="src\solutions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\solutions.hpp">
+    <ClInclude Include="src\helpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,6 +68,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="input\day_06.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input\day_07.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

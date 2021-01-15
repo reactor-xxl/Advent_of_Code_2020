@@ -1,51 +1,40 @@
-
 #include <map>
 #include <vector>
-#include <sstream>
+#include <sstream> /* validation rules */
 #include <iomanip>
 #include <iostream>
 #include <fstream>
-#include "String.hpp"
+#include <string>
+#include "helpers.hpp"
 
-using Document = std::map<String, String>;
+using Credentials = std::map<std::string, std::string>;
+using ValidationRuleset = std::map<std::string, bool (*)(const std::string&)>;
 
-const String test_data =
-R"foo(ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
-byr:1937 iyr:2017 cid:147 hgt:183cm
-)foo";
+/* solutions */
+void	day_04_problem_01();
+void	day_04_problem_02();
 
+/* reads a single set of credentials, stopping at a double newline */
+static Credentials	read( std::istream& iss );
 
-const String more_test_data =
-R"foo(ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
-byr:1937 iyr:2017 cid:147 hgt:183cm
+/* reads and builds a vector of credentials */
+static std::vector<Credentials>	buildCredentialsVect( std::istream& iss  );
 
-iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
-hcl:#cfa07d byr:1929
+/* Credentials validation for part one (key/value exists)*/
+static bool isValid_basic( const Credentials& doc );
 
-hcl:#ae17e1 iyr:2013
-eyr:2024
-ecl:brn pid:760753108 byr:1931
-hgt:179cm
+/* Credentials validation for part two (key/value exists, value falls into correct range */
+static bool isValid_complete( const Credentials& doc );
 
-hcl:#cfa07d eyr:2025 pid:166559648
-iyr:2011 ecl:brn hgt:59in)foo";
-
-
-void DEBUG_dump_Document( const Document& doc );
-Document	read( std::istream& iss );
-void	buildDocumentList( const String& str );
-
-bool byr_rule( const String& str );
-bool iyr_rule( const String& str );
-bool eyr_rule( const String& str );
-bool hgt_rule( const String& str );
-bool hcl_rule( const String& str );
-bool ecl_rule( const String& str );
-bool pid_rule( const String& str );
-bool cid_rule( const String& str );
-
-
-using ValidationRuleset = std::map<String, bool (*)(const String&)>;
+/* Credential field validation functions */
+static bool byr_rule( const std::string& str );
+static bool iyr_rule( const std::string& str );
+static bool eyr_rule( const std::string& str );
+static bool hgt_rule( const std::string& str );
+static bool hcl_rule( const std::string& str );
+static bool ecl_rule( const std::string& str );
+static bool pid_rule( const std::string& str );
+static bool cid_rule( const std::string& str );
 
 const ValidationRuleset ruleset =
 {
@@ -60,54 +49,70 @@ const ValidationRuleset ruleset =
 };
 
 
-bool isValid( const Document& doc )
+
+
+
+void	day_04_problem_01()
 {
-	/*
-		byr (Birth Year)
-		iyr (Issue Year)
-		eyr (Expiration Year)
-		hgt (Height)
-		hcl (Hair Color)
-		ecl (Eye Color)
-		pid (Passport ID)
-		cid (Country ID)
-	*/
-	if ( doc.count( "byr" ) && doc.count( "iyr" )
-		&& doc.count( "eyr" ) && doc.count( "hgt" )
-		&& doc.count( "hcl" ) && doc.count( "ecl" )
-		&& doc.count( "pid" ) && doc.count( "cid" ) )
+	std::ifstream   infile;
+
+	if ( !begin_problem( 4, 1, infile ) )
+		return;
+
+
+	auto allDocs = buildCredentialsVect( infile );
+	auto validCount = 0;
+	auto invalidCount = 0;
+
+	for ( const auto& d : allDocs )
 	{
-		return true;
+		if ( isValid_basic( d ) )
+			++validCount;
+		else
+			++invalidCount;
+
 	}
 
-	return false;
+	std::cout << "There were " << validCount << " valid documents and " << invalidCount << " invalid ones." << std::endl;
 }
 
 
-void DEBUG_dump_Document( const Document& doc )
+void	day_04_problem_02()
 {
-	std::cout << "---- ";
-	if ( !isValid( doc ) )
-		std::cout << "in";
-	
-	std::cout << "valid document:\n";
+	std::ifstream   infile;
 
-	for ( const auto& kv : doc )
+	if ( !begin_problem( 4, 2, infile ) )
+		return;
+
+	auto allDocs = buildCredentialsVect( infile );
+	auto validCount = 0;
+	auto invalidCount = 0;
+
+	for ( const auto& d : allDocs )
 	{
-		std::cout << "    " << kv.first << ":" << kv.second << std::endl;
+		if ( isValid_complete( d ) )
+			++validCount;
+		else
+			++invalidCount;
+
 	}
+
+	std::cout << "There were " << validCount << " valid documents and " << invalidCount << " invalid ones." << std::endl;
 }
 
 
-Document	read( std::istream& iss )
+
+
+
+Credentials	read( std::istream& iss )
 {
-	Document doc;
+	Credentials doc;
 	bool inDoc = true;
 
 	while ( iss && inDoc )
 	{
-		String key;
-		String value;
+		std::string key;
+		std::string value;
 		char colon;
 		char ws;
 
@@ -137,102 +142,56 @@ Document	read( std::istream& iss )
 }
 
 
-std::vector<Document>	buildDocumentList( std::istream& iss  )
+std::vector<Credentials>	buildCredentialsVect( std::istream& iss  )
 {
-	std::vector<Document> allDocs;
+	std::vector<Credentials> allDocs;
 
 	while ( iss )
 	{
-		Document doc = read(iss);
+		Credentials doc = read(iss);
 		allDocs.push_back( doc );
 	}
 	return allDocs;
 }
 
 
-void	day_04_problem_01( const String& inputFilename )
+bool isValid_basic( const Credentials& doc )
 {
- 	std::cout << "Day 4, Problem 1:\n";
 
-	std::fstream   infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
+	for ( const auto& rule : ruleset )
 	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 4, Problem 1 solution cannot be provided."
-			<< std::endl;
-		return;
+		if ( !doc.count( rule.first ) )
+			return false;
 	}
 
-	auto allDocs = buildDocumentList( infile );
-	auto validCount = 0;
-	auto invalidCount = 0;
+	return true;
+}
 
-	for ( const auto& d : allDocs )
+
+bool isValid_complete( const Credentials& doc )
+{
+
+	for ( const auto& rule : ruleset )
 	{
-		if ( isValid( d ) )
-			++validCount;
+		if ( !doc.count( rule.first ) )
+			return false;
+
+		const auto& docValue = doc.at( rule.first );
+
+		if ( rule.second( docValue ) )
+			continue;
 		else
-			++invalidCount;
-
+			return false;
 	}
 
-	std::cout << "There were " << validCount << " valid documents and " << invalidCount << " invalid ones." << std::endl;
+	return true;
 }
 
 
-/*
 
 
-void	read( const String& str )
-{
-	std::istringstream	iss{ more_test_data };
-	std::vector<Document> allDocs;
 
-	while ( iss )
-	{
-		Document doc = read(iss);
-		bool inDoc = true;
-
-		while ( iss && inDoc )
-		{
-			String key;
-			String value;
-			char colon;
-			char ws;
-
-			std::skipws( iss );
-
-			iss >> std::setw( 3 ) >> key;
-			iss >> colon;
-			iss >> value;
-			doc[key] = value;
-
-			std::noskipws( iss );
-			iss >> ws;
-			if ( ws == '\n' )
-			{
-				if ( iss.peek() == '\n' )
-				{
-					// two newlines in a row, next Document
-					inDoc = false;
-				}
-			}
-		}
-
-		allDocs.push_back( doc );
-	}
-
-	for ( const auto& d : allDocs )
-		DEBUG_dump_Document( d );
-
-}
-
-
-*/
-
-
-bool byr_rule( const String& str )
+bool byr_rule( const std::string& str )
 {
 	/* byr (Birth Year) - four digits; at least 1920 and at most 2002 */
 	const int earliestYear = 1920;
@@ -252,7 +211,7 @@ bool byr_rule( const String& str )
 }
 
 
-bool iyr_rule( const String& str )
+bool iyr_rule( const std::string& str )
 {
 	/* iyr (Issue Year) - four digits; at least 2010 and at most 2020 */
 	const int earliestYear = 2010;
@@ -272,7 +231,7 @@ bool iyr_rule( const String& str )
 }
 
 
-bool eyr_rule( const String& str )
+bool eyr_rule( const std::string& str )
 {
 	/* eyr (Expiration Year) - four digits; at least 2020 and at most 2030 */
 	const int earliestYear = 2020;
@@ -292,7 +251,7 @@ bool eyr_rule( const String& str )
 }
 
 
-bool hgt_rule( const String& str )
+bool hgt_rule( const std::string& str )
 {
 	/* hgt (Height) - a number followed by either cm or in:
     If cm, the number must be at least 150 and at most 193.
@@ -306,19 +265,19 @@ bool hgt_rule( const String& str )
 	std::istringstream iss{ str };
 
 	int height{ 0 };
-	String unit;
+	std::string unit;
 
 	iss >> height;
 	iss >> unit;
 
-	if ( unit == String{ "cm" } )
+	if ( unit == std::string{ "cm" } )
 	{
 		if( (height >= cmMin) && (height <= cmMax) )
 		{
 			return true;
 		}
 	}
-	else if ( unit == String{ "in" } )
+	else if ( unit == std::string{ "in" } )
 	{
 		if( (height >= inMin) && (height <= inMax) )
 		{
@@ -329,7 +288,7 @@ bool hgt_rule( const String& str )
 	return false;
 }
 
-bool hcl_rule( const String& str )
+bool hcl_rule( const std::string& str )
 {
 	/* hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f */
 	std::istringstream iss{ str };
@@ -341,7 +300,7 @@ bool hcl_rule( const String& str )
 	if ( pound != '#' )
 		return false;
 
-	String color;
+	std::string color;
 
 	iss >> color;
 
@@ -365,10 +324,10 @@ bool hcl_rule( const String& str )
 }
 
 
-bool ecl_rule( const String& str )
+bool ecl_rule( const std::string& str )
 {
 	/* ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth */
-	const String validEyeColors[]{
+	const std::string validEyeColors[]{
 		{"amb"},
 		{"blu"},
 		{"brn"},
@@ -380,7 +339,7 @@ bool ecl_rule( const String& str )
 
 	std::istringstream iss{ str };
 
-	String eyeColor;
+	std::string eyeColor;
 
 	iss >> eyeColor;
 
@@ -396,12 +355,12 @@ bool ecl_rule( const String& str )
 }
 
 
-bool pid_rule( const String& str )
+bool pid_rule( const std::string& str )
 {
 	/* pid (Passport ID) - a nine-digit number, including leading zeroes.*/
 	std::istringstream iss{ str };
 
-	String pidNum;
+	std::string pidNum;
 
 	iss >> pidNum;
 
@@ -418,9 +377,10 @@ bool pid_rule( const String& str )
 }
 
 
-bool cid_rule( const String& str )
+bool cid_rule( const std::string& str )
 {
 	/* cid (Country ID) - ignored, missing or not. */
-	return true;
+	if( str.size() || !str.size() )
+		return true; return true;
 }
 

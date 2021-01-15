@@ -1,11 +1,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "String.hpp"
-
-//------
-#include <sstream>
+#include <string>
 #include <tuple>
+#include "helpers.hpp"
+
+void	day_03_problem_01();
+void	day_03_problem_02();
 
 using Slope = std::tuple<int, int>;
 
@@ -22,20 +23,20 @@ public:
 	bool	traverse(const Slope& s);
 	std::vector<int>	traverseAccumulate( const std::vector<Slope>& svec );
 
-	static const String test_map;
+	static const std::string test_map;
 
 private:
 	void	resetCounts();
 	bool	validate();
 
-	std::vector<String> m_map{};
+	std::vector<std::string> m_map{};
 	size_t		m_treeCount{0};
 	size_t		m_blankCount{0};
 	size_t		m_stepCount{0};
 };
 
 
-const String TobogganMap::test_map =
+const std::string TobogganMap::test_map =
 R"foo(..##.......
 #...#...#..
 .#....#..#.
@@ -77,7 +78,7 @@ void	TobogganMap::load( std::istream& is )
 	m_map.clear();
 	resetCounts();
 
-	String temp;
+	std::string temp;
 
     while ( is )
     {
@@ -181,19 +182,12 @@ bool	TobogganMap::validate()
 
 /*--------------------------*/
 
-void	day_03_problem_01( const String& inputFilename )
+void	day_03_problem_01()
 {
- 	std::cout << "Day 3, Problem 1:\n";
+	std::ifstream   infile;
 
-	std::ifstream	infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 3, Problem 1 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 3, 1, infile ) )
 		return;
-	}
 
 	TobogganMap		tb;
 
@@ -211,19 +205,12 @@ void	day_03_problem_01( const String& inputFilename )
 
 
 
-void	day_03_problem_02( const String& inputFilename )
+void	day_03_problem_02()
 {
- 	std::cout << "Day 3, Problem 2:\n";
+	std::ifstream   infile;
 
-	std::ifstream	infile{ inputFilename.c_str() };
-
-	if ( !infile )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 3, Problem 2 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 3, 2, infile ) )
 		return;
-	}
 
 	std::vector<Slope>	svec;
 

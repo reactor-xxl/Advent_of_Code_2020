@@ -1,21 +1,26 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include "String.hpp"
+#include <string>
+#include "helpers.hpp"
 
-using IndexList = std::vector<size_t>;
+void	day_01_problem_01();
+void	day_01_problem_02();
+
+
+using ExpenseIndexes = std::vector<size_t>;
 
 class ExpenseReport 
 {
 public:
-	size_t		load(std::istream& inStream );
-	bool		find_sum_pair( int value );
-	bool		find_sum_trio( int value );
-	IndexList	get_indexes() const;
-	int			at( size_t index ) const;
+	size_t			load(std::istream& inStream );
+	bool			find_sum_pair( int value );
+	bool			find_sum_trio( int value );
+	ExpenseIndexes	get_indexes() const;
+	int				at( size_t index ) const;
 private:
 	std::vector<int>	m_expenses{};
-	IndexList			m_indexes{ 0,0 };
+	ExpenseIndexes		m_indexes{};
 };
 
 
@@ -96,7 +101,7 @@ bool	ExpenseReport::find_sum_trio( int value )
 	return false;
 }
 
-IndexList	ExpenseReport::get_indexes() const
+ExpenseIndexes	ExpenseReport::get_indexes() const
 {
 	return m_indexes;
 }
@@ -106,21 +111,15 @@ int		ExpenseReport::at( size_t index ) const
 	return m_expenses.at( index );
 }
 
-void	day_01_problem_01( const String& inputFilename, int sumValue )
+void	day_01_problem_01()
 {
- 	std::cout << "Day 1, Problem 1:\n";
+	std::ifstream   infile;
 
-	std::ifstream   infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 1, Problem 1 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 1, 1, infile ) )
 		return;
-	}
 
     ExpenseReport er;
+	const int sumValue{ 2020 };
 
     er.load( infile );
     if ( er.find_sum_pair( sumValue ) )
@@ -136,21 +135,15 @@ void	day_01_problem_01( const String& inputFilename, int sumValue )
     }
 }
 
-void	day_01_problem_02( const String& inputFilename, int sumValue )
+void	day_01_problem_02()
 {
- 	std::cout << "Day 1, Problem 2:\n";
+	std::ifstream   infile;
 
-	std::ifstream   infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 1, Problem 2 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 1, 2, infile ) )
 		return;
-	}
 
     ExpenseReport er;
+	const int sumValue{ 2020 };
 
     er.load( infile );
     if ( er.find_sum_trio( sumValue ) )

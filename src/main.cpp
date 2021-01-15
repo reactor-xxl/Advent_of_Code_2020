@@ -1,7 +1,7 @@
 /*****************************************************************************
                                MIT License
 
-Copyright (c) 2020	Jonathon Rogers
+Copyright (c) 2020 December 27	Jonathon Rogers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 #include "solutions.hpp"
+#include "helpers.hpp"
 #include <iostream>
 #include <iomanip>
 
-void announceDay( int day );
+void read_single_bag_rule();
+void testBagRead();
+
+void read_split_bag_rule();
+
+bool test_build_bag_rule( const std::string& str );
 
 
 int main()
 {
-    day_04_problem_01("input\\day_04.txt");
 /*
-    day_01_problem_01( "input\\day_01.txt", 2020 );
-    day_01_problem_02( "input\\day_01.txt", 2020 );
+    day_01_problem_01();
+    day_01_problem_02();
 
     std::cout << '\n';
 
@@ -44,18 +49,39 @@ int main()
 
     day_03_problem_01( "input\\day_03.txt" );
     day_03_problem_02( "input\\day_03.txt" );
+
+    std::cout << '\n';
+
+    day_04_problem_01("input\\day_04.txt");
+    day_04_problem_02("input\\day_04.txt");
+
+    std::cout << '\n';
+
+    day_05_problem_01("input\\day_05.txt");
+    day_05_problem_02("input\\day_05.txt");
+
+    std::cout << '\n';
 */
+/*
+    read_split_bag_rule();
+
+	std::string exampleRule{
+		"vibrant beige bags contain 1 wavy silver bag, 4 shiny indigo bags, 2 wavy aqua bags, 1 mirrored cyan bag."
+	};
+*/
+    std::string test1{ "shiny lavender bags contain 2 shiny salmon bags, 2 bright salmon bags, 4 posh fuchsia bags." };
+
+    test_build_bag_rule( test1 );
+
+    std::string test2{"bright chartreuse bags contain no other bags."};
+
+    test_build_bag_rule( test2 );
+
+ //   testBagRead();
+ //   read_single_bag_rule();
+//    testBagRead();
 
     return 0;
-}
-
-
-
-
-
-void announceDay( int day )
-{
-    std::cout << "------- DAY " << std::setw(2) << std::setfill('0') << day << " -------" << std::endl;
 }
 
 

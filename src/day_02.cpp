@@ -1,75 +1,63 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm> /* std::count() */
-#include "String.hpp"
-
+#include <string>
+#include "helpers.hpp"
 
 struct PasswordPolicy
 {
-	int		minCount{0};
-	int		maxCount{0};
+	int		minCount{ 0 };
+	int		maxCount{ 0 };
 	char	requiredLetter{ ' ' };
 };
 
+void	day_02_problem_01();
+void	day_02_problem_02();
+
 std::istream& operator>>( std::istream& is, PasswordPolicy& policy );
-bool isValid_old_job( const String& password, const PasswordPolicy& policy );
-bool isValid_OTCAS( const String& password, const PasswordPolicy& policy );
+bool	isValid_old_job( const std::string& password, const PasswordPolicy& policy );
+bool	isValid_OTCAS( const std::string& password, const PasswordPolicy& policy );
 
 
 
-void	day_02_problem_01( const String& inputFilename )
+void	day_02_problem_01()
 {
- 	std::cout << "Day 2, Problem 1:\n";
+	std::ifstream   infile;
 
-	std::fstream   infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 2, Problem 1 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 2, 1, infile ) )
 		return;
-	}
 
 	PasswordPolicy	policy;
-	String			password;
-	size_t		validPasswords{ 0 };
-size_t		totalPasswords{ 0 };
+	std::string		password;
+	size_t			validPasswords{ 0 };
+	size_t			totalPasswords{ 0 };
 
-while ( (infile >> policy) && (infile >> password) )
-{
-	++totalPasswords;
-
-	if ( isValid_old_job( password, policy ) )
+	while ( (infile >> policy) && (infile >> password) )
 	{
-		++validPasswords;
-	}
-}
+		++totalPasswords;
 
-std::cout << "Password file \"" << inputFilename
-<< "\" had " << validPasswords << " valid passwords out of " << totalPasswords
-<< " (" << totalPasswords - validPasswords << " invalid)."
-<< std::endl;
+		if ( isValid_old_job( password, policy ) )
+		{
+			++validPasswords;
+		}
+	}
+
+	std::cout << "The password database had " << validPasswords << " valid passwords out of " << totalPasswords
+		<< " (" << totalPasswords - validPasswords << " invalid)."
+		<< std::endl;
 }
 
 
 
-void	day_02_problem_02( const String& inputFilename )
+void	day_02_problem_02()
 {
- 	std::cout << "Day 2, Problem 2:\n";
+	std::ifstream   infile;
 
-	std::fstream   infile{ inputFilename.c_str() };
-
-	if ( !infile.is_open() )
-	{
-		std::cout << "Unable to open input file \"" << inputFilename
-			<< "\".  Day 2, Problem 2 solution cannot be provided."
-			<< std::endl;
+	if ( !begin_problem( 2, 2, infile ) )
 		return;
-	}
 
 	PasswordPolicy	policy;
-	String			password;
+	std::string			password;
 	size_t		validPasswords{ 0 };
 	size_t		totalPasswords{ 0 };
 
@@ -83,8 +71,7 @@ void	day_02_problem_02( const String& inputFilename )
 		}
 	}
 
-	std::cout << "Password file \"" << inputFilename
-		<< "\" had " << validPasswords << " valid passwords out of " << totalPasswords
+	std::cout << "The password database had " << validPasswords << " valid passwords out of " << totalPasswords
 		<< " (" << totalPasswords - validPasswords << " invalid)."
 		<< std::endl;
 }
@@ -115,7 +102,7 @@ std::istream& operator>>( std::istream& is, PasswordPolicy& policy )
 }
 
 
-bool isValid_old_job( const String& password, const PasswordPolicy& policy )
+bool isValid_old_job( const std::string& password, const PasswordPolicy& policy )
 {
 	auto lcount = std::count( password.begin(), password.end(), policy.requiredLetter );
 
@@ -126,7 +113,7 @@ bool isValid_old_job( const String& password, const PasswordPolicy& policy )
 }
 
 
-bool isValid_OTCAS( const String& password, const PasswordPolicy& policy )
+bool isValid_OTCAS( const std::string& password, const PasswordPolicy& policy )
 {
 	const auto pos1 = policy.minCount - 1;
 	const auto pos2 = policy.maxCount - 1;

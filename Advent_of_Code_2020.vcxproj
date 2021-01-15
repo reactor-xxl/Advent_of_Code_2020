@@ -143,11 +143,17 @@
     <ClCompile Include="src\day_02.cpp" />
     <ClCompile Include="src\day_03.cpp" />
     <ClCompile Include="src\day_04.cpp" />
+    <ClCompile Include="src\day_05.cpp" />
+    <ClCompile Include="src\day_06.cpp" />
+    <ClCompile Include="src\day_07.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\helpers.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\solutions.hpp" />
-    <ClInclude Include="src\String.hpp" />
+    <ClInclude Include="src\helpers.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input\day_01.txt" />
@@ -156,6 +162,7 @@
     <Text Include="input\day_04.txt" />
     <Text Include="input\day_05.txt" />
     <Text Include="input\day_06.txt" />
+    <Text Include="input\day_07.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
