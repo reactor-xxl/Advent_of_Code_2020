@@ -69,8 +69,10 @@ int main()
 		"vibrant beige bags contain 1 wavy silver bag, 4 shiny indigo bags, 2 wavy aqua bags, 1 mirrored cyan bag."
 	};
 */
-    void test_run_program();
-    test_run_program();
+//   void test_run_program();
+//   test_run_program();
+    void	day_07_problem_01();
+    day_07_problem_01();
 
  //   testBagRead();
  //   read_single_bag_rule();

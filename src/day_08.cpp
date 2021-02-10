@@ -161,7 +161,7 @@ bool run_program(Program prog)
 	if ( !prog.size() )
 	{
 		std::cout << "This program contains no instructions." << std::endl;
-		return;
+		return false;
 	}
 
 	long long accumulator{ 0 };
@@ -230,7 +230,7 @@ bool run_program(Program prog)
 	}
 
 	std::cout << "Accumulator was " << accumulator << std::endl;
-
+	return completed;
 }
 
 /*

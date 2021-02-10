@@ -38,7 +38,7 @@ bool begin_problem( int day, int part, std::ifstream& infile )
 }
 
 
-std::vector<std::string>	string_split( const std::string& str, char delim )
+std::vector<std::string>	string_split( const std::string& str, char delim, bool ignoreEmpty = false )
 {
 	std::istringstream iss{ str };
 
@@ -48,32 +48,18 @@ std::vector<std::string>	string_split( const std::string& str, char delim )
 
 	while ( std::getline( iss, subString, delim ) )
 	{
-		splittedString.push_back( subString );
+		if ( !ignoreEmpty || subString.length() )
+		{
+			splittedString.push_back( subString );
+		}
+
 	}
 
 	return splittedString;
 }
-
-
 
 
 std::vector<std::string>	string_split_ignore_empty( const std::string& str, char delim )
 {
-	std::istringstream iss{ str };
-
-	std::string subString;
-
-	std::vector<std::string> splittedString;
-
-	while ( std::getline( iss, subString, delim ) )
-	{
-		if ( subString.length() )
-		{
-			splittedString.push_back( subString );
-		}
-	}
-
-	return splittedString;
+	return string_split( str, delim, true );
 }
-
-
